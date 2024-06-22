@@ -2,7 +2,6 @@
 
 //スクリーンショットのボタン設定
 let screenshotButton = document.createElement("button");
-screenshotButton.setAttribute('data-testid', "screenshot-button");
 screenshotButton.className = "screenshotButton vjs-control";
 screenshotButton.style.width = "36px";
 screenshotButton.innerHTML = '<img src="' + chrome.runtime.getURL("icons/icon.svg") + '" style="width:22px;height:22px;">'
@@ -14,14 +13,16 @@ screenshotButton.onclick = CaptureScreenshot;
  */
 function AddScreenshotButton() {
 
-    let spacerElem = document.getElementsByClassName("vjs-custom-control-spacer vjs-spacer")[0];
+  let spacerElem = document.getElementsByClassName("vjs-custom-control-spacer vjs-spacer")[0];
 
 
-    if (spacerElem) {
-        spacerElem.insertAdjacentElement('afterend', screenshotButton);
-    } else {
-        setTimeout(() => { AddScreenshotButton() }, 1000);
-    }
+  if (spacerElem) {
+    spacerElem.insertAdjacentElement('afterend', screenshotButton);
+  } else {
+    setTimeout(() => {
+      AddScreenshotButton()
+    }, 1000);
+  }
 }
 
 AddScreenshotButton();
@@ -30,35 +31,19 @@ AddScreenshotButton();
  * キャプチャ実行
  */
 function CaptureScreenshot() {
-    let players = document.getElementsByTagName("video");
-    let player = Array.prototype.filter.call(players, (p) => p.src != "")[0];
-
-    let canvas = document.createElement("canvas");
-    canvas.width = player.videoWidth;
-    canvas.height = player.videoHeight;
-    canvas.getContext('2d').drawImage(player, 0, 0, canvas.width, canvas.height);
-
-    canvas.toBlob(async function (blob) {
-        let fileName = getFileName(player);
-
-        let downloadLink = document.createElement("a");
-        downloadLink.download = fileName;
-
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.click();
-    }, 'image/png');
-
+  let player = document.querySelector("video");
+  Util.processVideoPlayerToCanvasImage(player, getFileName(player));
 }
 
 /**
  * ファイル名取得
  */
 function getFileName(player) {
-    const prefix = Util.getFilePrefix();
-    const ext = ".png";
-    let title = "";
+  const prefix = Util.getFilePrefix();
+  const ext = ".png";
+  let title = "";
 
-    title += Util.formatTime(player.currentTime);
+  title += Util.formatTime(player.currentTime);
 
-    return prefix + "SPWN" + title + ext;
+  return prefix + "SPWN" + title + ext;
 }
