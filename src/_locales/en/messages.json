@@ -24,5 +24,11 @@
     },
     "options_save": {
         "message": "Save settings"
+    },
+    "options_save_success": {
+        "message": "Configuration save success !"
+    },
+    "options_save_failed": {
+        "message": "Configuration save failed !"
     }
 }
