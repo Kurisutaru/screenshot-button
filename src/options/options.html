@@ -2,62 +2,66 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>スクショボタン設定</title>
-
-    <!-- bootstrap -->
-    <link href="../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    </link>
-    <script src="../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <script src="../lib/jquery-3.5.1.slim.min.js"></script>
-    <script src="options.js" defer></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スクショボタン設定</title>
+  <link href="../lib/picnic/picnic.min.css" rel="stylesheet" />
+  <link href="../lib/toastify/css/toastify.min.css" rel="stylesheet" />
 </head>
 
 <body>
-    <div id="app" class="container">
-        <div class="card mt-4">
-            <div class="card-header" id="msg-current-shortcut-settings">
-            </div>
-
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <div class=" form-check form-switch">
-                            <label for="input-ctrl" class="form-check-label">Ctrl</label>
-                            <input type="checkbox" name="ctrl" id="input-ctrl" class="form-check-input">
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <label for="input-alt" class="form-check-label">Alt</label>
-                            <input type="checkbox" name="alt" id="input-alt" class="form-check-input">
-                        </div>
-
-                        <div class="form-check form-switch">
-                            <label for="input-shift" class="form-check-label">Shift</label>
-                            <input type="checkbox" name="shift" id="input-shift" class="form-check-input">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-1">
-                    <div class="col-2">
-                        <label id="msg-shortcut-key" for="input-key"></label>
-                        <input type="email" name="key" :value="key" id="input-key" maxlength="1"
-                            style="text-align:center" @keydown="onKeyDown" class="form-control">
-                    </div>
-                </div>
-
-                <div class="row mt-2">
-                    <div class="col">
-                        <button id="save-btn" class="btn btn-primary"></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="flex three center" style="margin-top: 3rem;">
+    <article class="card half-500">
+      <header style="background-color: #f0f0f0;">
+        <h3 id="msg-current-shortcut-settings"></h3>
+      </header>
+      <footer>
+        <section>
+          <label>
+            <input id="input-ctrl" type="checkbox">
+            <span class="checkable">Ctrl</span>
+          </label>
+        </section>
+        <section>
+          <label>
+            <input id="input-alt" type="checkbox">
+            <span class="checkable">Alt</span>
+          </label>
+        </section>
+        <section>
+          <label>
+            <input id="input-shift" type="checkbox">
+            <span class="checkable">Shift</span>
+          </label>
+        </section>
+        <section>
+          <label id="msg-shortcut-key" />
+        </section>
+        <section>
+          <fieldset class="flex two">
+            <label>
+              <input type="text" id="input-key" maxlength="1" style="text-align:center">
+            </label>
+          </fieldset>
+        </section>
+        <section>
+          <label>
+            <input id="input-clipboard" type="checkbox">
+            <span class="checkable">Copy to Clipboard instead download image</span>
+          </label>
+        </section>
+        <section>
+          <label>
+            <button id="save-btn">Save</button>
+          </label>
+        </section>
+      </footer>
+    </article>
+  </div>
+  <!-- JS -->
+  <script src="../lib/toastify/js/toastify.min.js"></script>
+  <script src="options.js" defer></script>
 </body>
 
 </html>

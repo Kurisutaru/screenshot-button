@@ -1,4 +1,22 @@
+# Kuri Rework Changelog
+
+## Configuration UI Rework
+
+1. Remove bootstrap (its too big just for simple pages) and jQuery (its not needed, VanillaJS cover all the stuff).
+
+   Bootstrap ➡️ [Picnic CSS](https://picnicss.com/)
+   jQuery ➡️ Removed
+   Toastify ➡️ Added
+
+2. Adding option  "Copy to Clipboard"
+3. When saving configuration adding small information toast
+
+Note : jQuery files will be removed on Function Rework later
+
+=====
+
 # スクショボタン
+
 動画配信サイト上の動画のスクリーンショットを１クリックで撮影できるchrome拡張機能
 
 対応している動画配信サイト
@@ -20,5 +38,4 @@
 ![mildom](https://user-images.githubusercontent.com/57102101/92698922-ed901a00-f387-11ea-8656-091d6f142dd1.png)
 - Twitch
 ![twitch](https://user-images.githubusercontent.com/57102101/92698926-ef59dd80-f387-11ea-8f53-ae19922bb74a.png)
-
 
