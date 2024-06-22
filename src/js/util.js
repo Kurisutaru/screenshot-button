@@ -54,7 +54,6 @@ class Util {
 
   static processVideoPlayerToCanvasImage(player, fileName) {
     try {
-      throw("abc");
       let clipboard = false;
       chrome.storage.sync.get(['clipboard'], function (result) {
         if ('clipboard' in result) clipboard = result.clipboard;
