@@ -1,43 +1,44 @@
 'use strict';
 
-//スクリーンショットのボタン設定
-let screenshotButton = document.createElement("button");
-screenshotButton.setAttribute('data-testid', "screenshot-button");
-screenshotButton.id = "chrome-extension-screenshot-button";
-screenshotButton.className = "screenshotButton";
-screenshotButton.style.width = "auto";
-screenshotButton.innerHTML = '<img src="' + chrome.runtime.getURL("icons/icon.svg") + '" style="width:25px;height:25px;">'
-screenshotButton.style.cssFloat = "left";
-screenshotButton.onclick = CaptureScreenshot;
-
 /**
  * スクリーンショットボタンを追加
  */
 function AddScreenshotButton() {
-    window.addEventListener("load", main, false);
+  window.addEventListener("load", main, false);
 }
 
 /**
  * CMでプレイヤーの更新が走るので定期的に 存在チェック→なければ追加 を繰り返す
  */
 function main(e) {
-    const jsInitCheckTimer = setInterval(jsLoaded, 1000);
+  //スクリーンショットのボタン設定
+  let screenshotButton = document.createElement("button");
+  screenshotButton.className = "screenshotButton";
+  screenshotButton.style = "width: auto; float: left; cursor: pointer";
+  screenshotButton.innerHTML = '<img alt="screenshot-button" src="' + chrome.runtime.getURL("icons/icon.svg") + '" style="width:25px;height:25px;">'
+  screenshotButton.onclick = CaptureScreenshot;
 
-    function jsLoaded() {
+  //Initial Injection and Watcher Injection
+  const jsInitCheckTimer = setInterval(jsLoaded, 500);
+  let jsWatcherCheckTimer = null;
 
+  function jsLoaded() {
+    try {
+      let playerControls = document.querySelector("[class^='ControlBar__BottomRightBlock']");
+      const isExist = playerControls.querySelector(".screenshotButton");
+      if (isExist) {
         //追加済みであれば何もしない
-        let isExist = document.getElementById("chrome-extension-screenshot-button");
-        if (isExist) {
-            return;
+        if (jsWatcherCheckTimer == null) {
+          clearInterval(jsInitCheckTimer);
+          jsWatcherCheckTimer = setInterval(jsLoaded, 5000);
         }
-
-        //クラス名前方一致
-        let CtrlBar = $("[class^='ControlBar__BottomRightBlock']")[0];
-
-        if (CtrlBar) {
-            CtrlBar.prepend(screenshotButton);
-        }
-    };
+        return;
+      }
+      playerControls.prepend(screenshotButton);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 }
 
 AddScreenshotButton();
@@ -46,42 +47,26 @@ AddScreenshotButton();
  * キャプチャ実行
  */
 function CaptureScreenshot() {
-    let player = document.getElementById("openrec-video");
-
-    let canvas = document.createElement("canvas");
-    canvas.width = player.videoWidth;
-    canvas.height = player.videoHeight;
-    canvas.getContext('2d').drawImage(player, 0, 0, canvas.width, canvas.height);
-
-    canvas.toBlob(async function (blob) {
-        let fileName = getFileName();
-
-        let downloadLink = document.createElement("a");
-        downloadLink.download = fileName;
-
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.click();
-    }, 'image/png');
-
+  let player = document.querySelector("video");
+  Util.processVideoPlayerToCanvasImage(player, getFileName(player));
 }
 
 /**
  * ファイル名取得
  */
-function getFileName() {
-    const prefix = Util.getFilePrefix();
-    const ext = ".png";
-    let title;
-    let headerEls = $("h1[class^='MovieTitle__Title']");
+function getFileName(player) {
+  const prefix = Util.getFilePrefix();
+  const ext = ".png";
+  let title;
+  let headerEls = document.querySelector("h1[class^='MovieTitle__Title']");
 
-    if (headerEls.length > 0) {
-        title = headerEls[0].innerText.trim();
-    } else {
-        title = "OPENREC";
-    }
+  if (headerEls !== null) {
+    title = headerEls.innerText.trim();
+  } else {
+    title = "OPENREC";
+  }
 
-    let player = document.getElementById("openrec-video");
-    title += "_" + Util.formatTime(player.currentTime);
+  title += "_" + Util.formatTime(player.currentTime);
 
-    return prefix + title + ext;
+  return prefix + title + ext;
 }
