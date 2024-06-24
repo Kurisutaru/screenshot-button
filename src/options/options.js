@@ -1,5 +1,5 @@
 document.title = chrome.i18n.getMessage('options_page_title');
-document.getElementById("msg-shortcut-key").value = chrome.i18n.getMessage('options_page_shortcut_key');
+document.getElementById("msg-shortcut-key").innerHTML = chrome.i18n.getMessage('options_page_shortcut_key');
 document.getElementById("save-btn").value = chrome.i18n.getMessage('options_save');
 
 const inputCtrl = document.getElementById("input-ctrl");
