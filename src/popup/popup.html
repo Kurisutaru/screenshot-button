@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>スクショボタン設定</title>
+    <link href="../lib/picnic/picnic.min.css" rel="stylesheet"/>
+    <link href="../lib/toastify/css/toastify.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            width: 400px;
+            height: 350px;
+        }
+        h3, label {
+            font-size: calc(100% - 0.1em);
+        }
+        input[type=text] {
+            transform: scale(0.8);
+            transform-origin: 0 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="reduce-font">
+    <article class="card" style="border-radius: 0 !important;">
+        <header style="background-color: #f0f0f0;">
+            <h3 id="msg-current-shortcut-settings"></h3>
+        </header>
+        <footer>
+            <section>
+                <label>
+                    <input id="input-ctrl" type="checkbox">
+                    <span class="checkable">Ctrl</span>
+                </label>
+            </section>
+            <section>
+                <label>
+                    <input id="input-alt" type="checkbox">
+                    <span class="checkable">Alt</span>
+                </label>
+            </section>
+            <section>
+                <label>
+                    <input id="input-shift" type="checkbox">
+                    <span class="checkable">Shift</span>
+                </label>
+            </section>
+            <section>
+                <label id="msg-shortcut-key"></label>
+            </section>
+            <section>
+                <fieldset>
+                    <label>
+                        <input type="text" id="input-key" maxlength="1" style="text-align:center">
+                    </label>
+                </fieldset>
+            </section>
+            <section>
+                <label>
+                    <input id="input-clipboard" type="checkbox">
+                    <span class="checkable">Copy to Clipboard</span>
+                </label>
+            </section>
+            <section>
+                <label>
+                    <button id="save-btn">Save</button>
+                </label>
+            </section>
+        </footer>
+    </article>
+</div>
+<!-- JS -->
+<script src="../lib/toastify/js/toastify.min.js"></script>
+<script src="../options/options.js" defer></script>
+</body>
+
+</html>

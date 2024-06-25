@@ -36,6 +36,10 @@
 
 *Note: jQuery files will be removed during the Functional Rework later.*
 
+## Configuration Popup Feature
+
+Added a popup configuration that appears when clicking the extension. It was copied and modified from `option.html` to fit a 400px x 300px window size.
+
 ## Known Issues
 
 1. On Twitch Clip pages, the canvas can't copy from the video due to CORS policy, resulting in a tainted canvas that prevents taking screenshots from those canvases.
