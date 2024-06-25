@@ -1,6 +1,7 @@
 document.title = chrome.i18n.getMessage('options_page_title');
 document.getElementById("msg-shortcut-key").innerHTML = chrome.i18n.getMessage('options_page_shortcut_key');
 document.getElementById("save-btn").value = chrome.i18n.getMessage('options_save');
+document.getElementById("input-clipboard-label").innerHTML = chrome.i18n.getMessage('options_copy_to_clipboard');
 
 const inputCtrl = document.getElementById("input-ctrl");
 const inputAlt = document.getElementById("input-alt");
@@ -60,18 +61,22 @@ function setCurrentKey(ctrl, alt, shift, key) {
 }
 
 function saveSettings() {
-  console.log("Save settings");
+  pConsole("Save settings", "info");
   let ctrl = inputCtrl.checked;
   let alt = inputAlt.checked;
   let shift = inputShift.checked;
   let key = inputKey.value;
   let clipboard = inputClipboard.checked;
 
-  console.log("[Ctrl] : " + ctrl);
-  console.log("[Alt] : " + alt);
-  console.log("[Shift] : " + shift);
-  console.log("[Key] : " + key);
-  console.log("[Clipboard] : " + clipboard);
+  //Save Message
+  const saveSuccess = chrome.i18n.getMessage('options_save_success');
+  const saveFailed = chrome.i18n.getMessage('options_save_failed');
+
+  pConsole(`[Ctrl] : ${ctrl}`, "info");
+  pConsole(`[Alt] : ${alt}`, "info");
+  pConsole(`[Shift] : ${shift}`, "info");
+  pConsole(`[Key] : ${key}`, "info");
+  pConsole(`[Clipboard] : ${clipboard}`, "info");
 
   chrome.storage.sync.set({
     "ctrl": ctrl,
@@ -80,16 +85,16 @@ function saveSettings() {
     "key": key,
     "clipboard": clipboard,
   }).then(() => {
-    console.log("save succeed!");
+    pConsole(saveSuccess, "success");
     setCurrentKey(ctrl, alt, shift, key);
     Toastify({
-      text: chrome.i18n.getMessage('options_save_success'),
+      text: saveSuccess,
       style: { background: '#2ecc40' }
     }).showToast();
   }).catch(() => {
-    console.log("save failed.");
+    pConsole(saveSuccess, "error");
     Toastify({
-      text: chrome.i18n.getMessage('options_save_failed'),
+      text: saveFailed,
       style: { background: '#ff851b' }
     }).showToast();
   });

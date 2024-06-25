@@ -25,11 +25,16 @@
     "options_save": {
         "message": "保存"
     },
-    //Me translate using DeepL
     "options_save_success": {
         "message": "コンフィギュレーション保存成功 ！"
     },
     "options_save_failed": {
         "message": "コンフィギュレーションの保存に失敗しました！"
+    },
+    "options_copy_to_clipboard": {
+        "message": "クリップボードにコピー"
+    },
+    "error_video_source": {
+        "message": "ビデオソースの準備ができていません。"
     }
 }

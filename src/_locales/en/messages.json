@@ -30,5 +30,11 @@
     },
     "options_save_failed": {
         "message": "Configuration save failed !"
+    },
+    "options_copy_to_clipboard": {
+        "message": "Copy to Clipboard"
+    },
+    "error_video_source": {
+        "message": "Video source not ready."
     }
 }

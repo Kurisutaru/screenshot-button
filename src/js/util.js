@@ -53,31 +53,36 @@ class Util {
   }
 
   static processVideoPlayerToCanvasImage(player, fileName) {
-    try {
-      let clipboard = false;
-      chrome.storage.sync.get(['clipboard'], function (result) {
-        if ('clipboard' in result) clipboard = result.clipboard;
-      });
+    //Get Save To Clipboard config
+    let clipboard = false;
+    chrome.storage.sync.get(['clipboard'], function (result) {
+      if ('clipboard' in result) clipboard = result.clipboard;
+    });
 
-      let canvas = document.createElement("canvas");
-      canvas.width = player.videoWidth;
-      canvas.height = player.videoHeight;
-      canvas.getContext('2d').drawImage(player, 0, 0, canvas.width, canvas.height);
+    //Error Messages
+    const errorBlobMessage = chrome.i18n.getMessage('error_video_source');
 
-      canvas.toBlob(async function (blob) {
-        if (clipboard) {
-          const item = new ClipboardItem({"image/png": blob});
-          await navigator.clipboard.write([item]);
-        } else {
-          let downloadLink = document.createElement("a");
-          downloadLink.download = fileName;
-          downloadLink.href = URL.createObjectURL(blob);
-          downloadLink.click();
-        }
-      }, 'image/png');
-    } catch (e) {
-      console.error(e);
-    }
 
+    let canvas = document.createElement("canvas");
+    canvas.width = player.videoWidth;
+    canvas.height = player.videoHeight;
+    canvas.getContext('2d').drawImage(player, 0, 0, canvas.width, canvas.height);
+
+    canvas.toBlob(async function (blob) {
+      if (blob == null) {
+        pConsole(`${errorBlobMessage}`,'error');
+        return;
+      }
+
+      if (clipboard) {
+        const item = new ClipboardItem({"image/png": blob});
+        await navigator.clipboard.write([item]);
+      } else {
+        let downloadLink = document.createElement("a");
+        downloadLink.download = fileName;
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.click();
+      }
+    }, 'image/png');
   }
 }
