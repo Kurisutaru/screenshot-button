@@ -38,7 +38,7 @@
 
 ## Configuration Popup Feature
 
-Added a popup configuration that appears when clicking the extension. It was copied and modified from `option.html` to fit a 400px x 300px window size.
+Added a popup configuration that appears when clicking the extension. It was copied and modified from `option.html` to fit a 400px x 350px window size.
 
 ## Known Issues
 
